@@ -9,23 +9,32 @@ Docker based Git SSH server for testing purposes.
 
 1. Run Git server.    
 
-       $ docker-compose up -d
+        docker-compose up -d
     
 2. Add local public SSH key to the server's `git` user.
 
-       $ docker-compose exec git-server /bin/ash -c "echo '<ssh public key>' >> /home/git/.ssh/authorized_keys"
+        docker-compose exec git-server /bin/ash -c \
+            "echo '<ssh public key>' >> /home/git/.ssh/authorized_keys"
 
 3. Create Git repository `foo`.
  
-       $ docker-compose exec git-server /bin/ash -c "mkdir -p /git/foo && git init --bare /git/foo && chown -R git:git /git"
+        docker-compose exec git-server /bin/ash -c "\
+            mkdir -p /git/foo \
+            && git init --bare /git/foo \
+            && chown -R git:git /git \
+            "
 
 4. Clone Git repository `foo`.
  
-       $ git clone ssh://git@localhost:2222/git/foo && cd foo
+        git clone ssh://git@localhost:2222/git/foo \
+            && cd foo
 
 5. Commit and push to the Git repository `foo`.
 
-       $ echo "baz" > bar && git add bar && git commit -m "baz into bar" && git push origin HEAD 
+        echo "baz" > bar \
+            && git add bar \
+            && git commit -m "baz into bar" \
+            && git push origin HEAD 
 
 ## Development
 Run locally built image
