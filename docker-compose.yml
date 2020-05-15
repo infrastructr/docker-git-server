@@ -1,0 +1,6 @@
+version: '2'
+services:
+  git-server:
+    build: .
+    ports:
+      - "2222:22"
